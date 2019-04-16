@@ -1,0 +1,39 @@
+#
+# GNU makefile for dbimp
+#==============================
+
+
+# compiler settings
+#--------------------------------
+
+# settings for GNU C compiler
+CC = g++
+CFLAGS = -Wall -g -I`pg_config --includedir`
+LDFLAGS = -L`pg_config --libdir` -lstdc++
+
+
+# from here on, no alterations
+# should be necessary
+#----------------------------------
+
+
+all: dbimp-ecpg dbimp-libpq
+
+dbimp-libpq: main.o db_libpq.o
+	$(CC) -o $@ $+ $(LDFLAGS) -lpq 
+
+dbimp-ecpg: main.o db_ecpg.o
+	$(CC) -o $@ $+ $(LDFLAGS) -lecpg -lpq
+
+%.o: %.cpp db.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $*.cpp
+
+db_ecpg.cpp: db_ecpg.pgc
+	ecpg -o $@ $<
+
+tags: *.cpp *.h
+	etags *.cpp *.h
+
+clean:
+	rm -f *.o dbimp* db_ecpg.cpp
+
