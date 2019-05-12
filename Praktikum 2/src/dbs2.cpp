@@ -81,6 +81,7 @@ int main(int argc, char *argv[]) {
     rv = db_delete();
     if(rv != 0) {
       cerr << "delete failed \n";
+      cerr << "starting rollback \n";
       rv = db_rollback();
       if(rv != 0)
         cerr << "rollback failed. All Hope is lost \n";
@@ -96,12 +97,14 @@ int main(int argc, char *argv[]) {
     }
     catch(...) {
       cerr << "error while reading file " << input.getFilname() << "\n";
+      cerr << "starting rollback \n";
       rv = db_rollback();
       if(rv != 0)
         cerr << "rollback failed. All Hope is lost \n";
       db_logout();
       return -1;
     }
+
     readCounter++;
     tokens.init(line, ";");
 
@@ -123,6 +126,8 @@ int main(int argc, char *argv[]) {
       rv = db_insert(value[HNR], value[NAME], value[PLZ], value[ORT]);
       if(rv != 0) {
         cerr << "insert failed \n";
+        cerr << "could not insert line " << readCounter << " in " + input.getFilname() << "\n";
+        cerr << "starting rollback \n";
         rv = db_rollback();
         if(rv != 0)
           cerr << "rollback failed. All Hope is lost \n";
@@ -132,9 +137,10 @@ int main(int argc, char *argv[]) {
       importCounter++;
     }
     else if (rv == 1)
-      cout << "Entry hnr: " << value[HNR] << "already existing" << endl;
+      cout << "Entry hnr: " << value[HNR] << " already exists" << endl;
     else {
       cerr << "find failed \n";
+      cerr << "starting rollback \n";
       rv = db_rollback();
       if(rv != 0)
         cerr << "rollback failed. All Hope is lost \n";
@@ -146,6 +152,7 @@ int main(int argc, char *argv[]) {
   rv = db_commit();
   if(rv != 0) {
     cerr << "commit failed \n";
+    cerr << "starting rollback \n";
     rv = db_rollback();
     if(rv != 0)
       cerr << "rollback failed. All Hope is lost \n";
