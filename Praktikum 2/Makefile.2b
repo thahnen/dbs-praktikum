@@ -1,12 +1,10 @@
 #
-# GNU makefile for dbimp
-#==============================
+# GNU makefile fuer DBS Aufgabe 2b
+#=================================
 
 
-# compiler settings
+# compiler options
 #--------------------------------
-
-# settings for GNU C compiler
 CC = g++
 CFLAGS = -Wall -g -I`pg_config --includedir`
 LDFLAGS = -L`pg_config --libdir` -lstdc++
@@ -20,7 +18,7 @@ LDFLAGS = -L`pg_config --libdir` -lstdc++
 all: dbimp-ecpg dbimp-libpq
 
 dbimp-libpq: main.o db_libpq.o
-	$(CC) -o $@ $+ $(LDFLAGS) -lpq 
+	$(CC) -o $@ $+ $(LDFLAGS) -lpq
 
 dbimp-ecpg: main.o db_ecpg.o
 	$(CC) -o $@ $+ $(LDFLAGS) -lecpg -lpq
@@ -36,4 +34,3 @@ tags: *.cpp *.h
 
 clean:
 	rm -f *.o dbimp* db_ecpg.cpp
-

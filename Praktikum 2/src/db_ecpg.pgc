@@ -1,0 +1,111 @@
+#include "db.h"
+EXEC SQL INCLUDE sqlca;
+
+
+// Datenbank-Login
+// rc: 0 = ok, 1 = error
+int db_login(const string& user, const string& password, const string& host, const string& dbname) {
+    EXEC SQL BEGIN DECLARE SECTION;
+    string u = user;
+    string p = password;
+    string h = host;
+    string db = dbname;
+    EXEC SQL END DECLARE SECTION;
+
+    EXEC SQL CONNECT TO :db@:h USER :u/:p;
+    if (SQLCODE) {
+        cout << "Connection can not be established!" << endl;
+        return 1
+    }
+    return 0;
+}
+
+// Datenbank-Logout
+void db_logout() {
+    EXEC SQL DISCONNECT ALL;
+    if (SQLCODE) {
+        cout << "Connection can not be closed!" << endl;
+    }
+}
+
+// Transaktionsbefehle
+// rc: 0 = ok, 1 = error
+int db_begin() {
+    EXEC SQL BEGIN;
+    if (SQLCODE) {
+        cout << "Transaction can not be started!" << endl;
+        return 1
+    }
+    return 0;
+}
+
+int db_commit() {
+    EXEC SQL COMMIT;
+    if (SQLCODE) {
+        cout << "Transaction can not be commited!" << endl;
+        return 1
+    }
+    return 0;
+}
+
+int db_rollback() {
+    EXEC SQL ROLLBACK;
+    if (SQLCODE) {
+        cout << "Transaction can not be rollbacked!" << endl;
+        return 1
+    }
+    return 0;
+}
+
+// Herstellernummer schon vorhanden?
+// rc: 0 = noch nicht da, 1 = schon da, -1 = error
+int db_findhnr(const string& hnr) {
+    EXEC SQL BEGIN DECLARE SECTION;
+    string h = hnr;
+    string ret;
+    EXEC SQL END DECLARE SECTION;
+
+    EXEC SQL SELECT * FROM hersteller WHERE hnr=:h INTO :ret;
+    if (SQLCODE) {
+        if (SQLCODE == 100) {
+            cout << "HNR already existed!" << endl;
+            return 1;
+        }
+        cout << "An error ocurred on the statement!" << endl;
+        return -1;
+    }
+    return 0;
+}
+
+// Einfuegen Datensatz
+// rc: 0 = ok, 1 = error
+int db_insert(const string& hnr, const string& name, const string& plz, const string& ort) {
+    EXEC SQL BEGIN DECLARE SECTION;
+    string h = hnr;
+    string n = name;
+    string p = plz;
+    string o = ort;
+    EXEC SQL END DECLARE SECTION;
+
+    EXEC SQL INSERT INTO hersteller (
+        hnr, name, plz, ort
+    ) VALUES (
+        :h, :n, :p, :o
+    );
+    if (SQLCODE) {
+        cout << "Data can not be inserted!" << endl;
+        return 1;
+    }
+    return 0;
+}
+
+// Loeschen des kompletten Tabelleninhalts
+// rc: 0 = ok, 1 = error
+int db_delete() {
+    EXEC SQL DELETE FROM hersteller;
+    if (SQLCODE) {
+        cout << "Table can not be fully deleted!" << endl;
+        return 1;
+    }
+    return 0;
+}

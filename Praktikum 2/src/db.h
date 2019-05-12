@@ -14,9 +14,10 @@
 
 using namespace std;
 
+
 // Datenbank-Login
 // rc: 0 = ok, 1 = error
-int db_login(const string &user, const string &password, const string &host, const string &dbname);
+int db_login(const string& user, const string& password, const string& host, const string& dbname);
 
 // Datenbank-Logout
 void db_logout();
@@ -29,11 +30,11 @@ int db_rollback();
 
 // Herstellernummer schon vorhanden?
 // rc: 0 = noch nicht da, 1 = schon da, -1 = error
-int db_findhnr(const string &hnr);
+int db_findhnr(const string& hnr);
 
 // Einfuegen Datensatz
 // rc: 0 = ok, 1 = error
-int db_insert(const string &hnr, const string &name, const string &plz, const string &ort);
+int db_insert(const string& hnr, const string& name, const string& plz, const string& ort);
 
 // Loeschen des kompletten Tabelleninhalts
 // rc: 0 = ok, 1 = error
