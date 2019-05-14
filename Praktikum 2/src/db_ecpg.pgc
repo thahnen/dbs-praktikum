@@ -1,21 +1,24 @@
 #include "db.h"
+#include <iostream>
 EXEC SQL INCLUDE sqlca;
 
 
 // Datenbank-Login
 // rc: 0 = ok, 1 = error
 int db_login(const string& user, const string& password, const string& host, const string& dbname) {
+    string t = dbname + "@" + host;
     EXEC SQL BEGIN DECLARE SECTION;
-    string u = user;
-    string p = password;
-    string h = host;
-    string db = dbname;
+    const char *u = user.c_str();
+    const char *p = password.c_str();
+    const char *h = host.c_str();
+    const char *db = dbname.c_str();
+    const char *target = t.c_str();
     EXEC SQL END DECLARE SECTION;
 
-    EXEC SQL CONNECT TO :db@:h USER :u/:p;
+    EXEC SQL CONNECT TO :target USER :u/:p;
     if (SQLCODE) {
         cout << "Connection can not be established!" << endl;
-        return 1
+        return 1;
     }
     return 0;
 }
@@ -34,7 +37,7 @@ int db_begin() {
     EXEC SQL BEGIN;
     if (SQLCODE) {
         cout << "Transaction can not be started!" << endl;
-        return 1
+        return 1;
     }
     return 0;
 }
@@ -43,7 +46,7 @@ int db_commit() {
     EXEC SQL COMMIT;
     if (SQLCODE) {
         cout << "Transaction can not be commited!" << endl;
-        return 1
+        return 1;
     }
     return 0;
 }
@@ -52,7 +55,7 @@ int db_rollback() {
     EXEC SQL ROLLBACK;
     if (SQLCODE) {
         cout << "Transaction can not be rollbacked!" << endl;
-        return 1
+        return 1;
     }
     return 0;
 }
@@ -61,11 +64,11 @@ int db_rollback() {
 // rc: 0 = noch nicht da, 1 = schon da, -1 = error
 int db_findhnr(const string& hnr) {
     EXEC SQL BEGIN DECLARE SECTION;
-    string h = hnr;
-    string ret;
+    const char *h = hnr.c_str();
+    char ret[256];
     EXEC SQL END DECLARE SECTION;
 
-    EXEC SQL SELECT * FROM hersteller WHERE hnr=:h INTO :ret;
+    EXEC SQL SELECT *  INTO :ret FROM hersteller WHERE hnr=:h;
     if (SQLCODE) {
         if (SQLCODE == 100) {
             cout << "HNR already existed!" << endl;
@@ -81,10 +84,10 @@ int db_findhnr(const string& hnr) {
 // rc: 0 = ok, 1 = error
 int db_insert(const string& hnr, const string& name, const string& plz, const string& ort) {
     EXEC SQL BEGIN DECLARE SECTION;
-    string h = hnr;
-    string n = name;
-    string p = plz;
-    string o = ort;
+    const char *h = hnr.c_str();
+    const char *n = name.c_str();
+    const char *p = plz.c_str();
+    const char *o = ort.c_str();
     EXEC SQL END DECLARE SECTION;
 
     EXEC SQL INSERT INTO hersteller (
