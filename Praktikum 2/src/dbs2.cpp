@@ -74,8 +74,7 @@ int main(int argc, char* argv[]) {
             cerr << "starting rollback \n";
 
             rv = db_rollback();
-            if (rv != 0)
-                cerr << "rollback failed. All Hope is lost \n";
+            if (rv != 0) cerr << "rollback failed. All Hope is lost \n";
 
             db_logout();
             return -1;
@@ -91,8 +90,7 @@ int main(int argc, char* argv[]) {
             cerr << "starting rollback \n";
 
             rv = db_rollback();
-            if (rv != 0)
-                cerr << "rollback failed. All Hope is lost \n";
+            if (rv != 0) cerr << "rollback failed. All Hope is lost \n";
 
             db_logout();
             return -1;
@@ -106,27 +104,25 @@ int main(int argc, char* argv[]) {
             cerr << "starting rollback \n";
 
             rv = db_rollback();
-            if (rv != 0)
-                cerr << "rollback failed. All Hope is lost \n";
+            if (rv != 0) cerr << "rollback failed. All Hope is lost \n";
 
             db_logout();
             return -1;
         }
 
-        for(i = 0; i < 4; i++)
-            value[i] = tokens.getNextToken();
+        for (i = 0; i < 4; i++) value[i] = tokens.getNextToken();
 
         rv = db_findhnr(value[HNR]);
         if (rv == 0) {
             rv = db_insert(value[HNR], value[NAME], value[PLZ], value[ORT]);
-            if(rv != 0) {
+            if (rv != 0) {
                 cerr << "insert failed \n";
                 cerr << "could not insert line " << readCounter << " in " + input.getFilname() << "\n";
                 cerr << "starting rollback \n";
 
                 rv = db_rollback();
-                if (rv != 0)
-                    cerr << "rollback failed. All Hope is lost \n";
+                if (rv != 0) cerr << "rollback failed. All Hope is lost \n";
+
                 db_logout();
                 return -1;
             }
@@ -138,8 +134,7 @@ int main(int argc, char* argv[]) {
             cerr << "starting rollback \n";
 
             rv = db_rollback();
-            if (rv != 0)
-                cerr << "rollback failed. All Hope is lost \n";
+            if (rv != 0) cerr << "rollback failed. All Hope is lost \n";
 
             db_logout();
             return -1;
@@ -152,8 +147,7 @@ int main(int argc, char* argv[]) {
         cerr << "starting rollback \n";
 
         rv = db_rollback();
-        if (rv != 0)
-            cerr << "rollback failed. All Hope is lost \n";
+        if (rv != 0) cerr << "rollback failed. All Hope is lost \n";
 
         db_logout();
         return -1;

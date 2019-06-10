@@ -10,9 +10,18 @@ Beinhaltet alle bearbeiteten Praktikumsunterlagen, bis jetzt nur zu Praktikum 1.
 
 ## Technik
 * PostgreSQL (psql)
-* SQL
+* SQL / Embedded SQL
+* C/C++
 
 ## Informationen der einzelnen Praktika
 1. Praktikum:
 * Einarbeitung in psql
 * Einarbeitung in SQL
+
+2. Praktikum
+* C-API mit Funktionalität
+* Embedded SQL
+
+3. Praktikum
+* View/ Trigger
+* PL/pgSQL

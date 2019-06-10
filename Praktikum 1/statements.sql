@@ -7,6 +7,6 @@ FROM person, abteilung
 WHERE person.abteilungnr=abteilung.nr AND person.vorname='Norbert' AND person.name='Herrling';
 
 -- 1.4) Was ist ...
-SELECT cast (avg (person.gehalt) AS numeric (7, 2)), abteilung.name
+SELECT cast(avg(person.gehalt) AS numeric (7, 2)), abteilung.name
 FROM person, abteilung
 WHERE person.abteilungnr=abteilung.nr GROUP BY abteilung.nr;

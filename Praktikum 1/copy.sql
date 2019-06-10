@@ -24,8 +24,8 @@ INSERT INTO person (
     CAST (nr AS int),
     name,
     vorname,
-    to_date (geburt, 'DD.MM.YYYY'),
+    to_date(geburt, 'DD.MM.YYYY'),
     abteilungnr,
-    to_number (gehalt, '00000D00'),
+    to_number(gehalt, '00000D00'),
     ort
 FROM import;
