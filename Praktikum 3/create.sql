@@ -1,9 +1,11 @@
 /*
     Drop everything to create again!
 */
-DROP VIEW letzterpreis;
+DROP FUNCTION IF EXISTS preis_at(varchar, date);
+DROP VIEW IF EXISTS preishistorie;
+DROP VIEW IF EXISTS letzterpreis;
 DROP TABLE IF EXISTS preishist;
-DROP SEQUENCE preishistNr;
+DROP SEQUENCE IF EXISTS preishistNr;
 DROP TABLE IF EXISTS produkt;
 DROP TABLE IF EXISTS hersteller;
 

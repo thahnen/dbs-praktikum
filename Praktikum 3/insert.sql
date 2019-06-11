@@ -18,7 +18,7 @@ INSERT INTO produkt (
     '2', 'Sekundenkleber', '2', 2.20, to_date('08.06.2019', 'DD.MM.YYYY')
 );
 INSERT INTO produkt (
-    pnr, name, hnr, preis, gueltigab#
+    pnr, name, hnr, preis, gueltigab
 ) VALUES (
     '3', 'Stift', '3', 3.20, to_date('09.06.2019', 'DD.MM.YYYY')
 );

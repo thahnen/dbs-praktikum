@@ -22,7 +22,7 @@ CREATE FUNCTION log_preis() RETURNS TRIGGER AS '
             END IF;
 
             -- add the new price if it changed and there is a new date
-            IF (NOT FOUND OR (lastChange.preis != NEW.preis AND lastChange.gueltigab < NEW.gueltigab)) THEN
+            IF (NOT FOUND OR (OLD.preis != NEW.preis AND OLD.gueltigab < NEW.gueltigab)) THEN
                 RAISE NOTICE ''TRIGGER2'';
 
                 INSERT INTO preishist (
