@@ -3,38 +3,40 @@
     Triggered on update on "produkt"
 */
 DROP FUNCTION IF EXISTS log_preis();
-CREATE FUNCTION log_preis() returns trigger AS '
-    declare
+CREATE FUNCTION log_preis() RETURNS TRIGGER AS '
+    DECLARE
         lastChange record;
-    begin
-        if (TG_OP = ''UPDATE'') then
-            raise notice ''TRIGGER1'';
+    BEGIN
+        -- i do not know if this is necessary?
+        IF (TG_OP = ''UPDATE'') THEN
+            RAISE NOTICE ''TRIGGER1'';
 
+            -- gets the last price for the given product number
             SELECT * INTO lastChange
             FROM letzterpreis
-            WHERE pnr=old.pnr;
+            WHERE pnr=OLD.pnr;
 
-            if (found and lastChange.gueltigab >= new.gueltigab) then
-                raise exception ''gueltigab must be > %'', lastChange.gueltigab;
-            end if;
+            -- handle the case that the new date is older than the old one
+            IF (FOUND AND lastChange.gueltigab >= NEW.gueltigab) THEN
+                RAISE EXCEPTION ''gueltigab must be > %'', lastChange.gueltigab;
+            END IF;
 
-            if (not found or (lastChange.preis != new.preis and lastChange.gueltigab < new.gueltigab)) then
-                --if (not found or (old.preis != new.preis and old.gueltigab < new.gueltigab)) then
-                -- ???
-                raise notice ''TRIGGER2'';
+            -- add the new price if it changed and there is a new date
+            IF (NOT FOUND OR (lastChange.preis != NEW.preis AND lastChange.gueltigab < NEW.gueltigab)) THEN
+                RAISE NOTICE ''TRIGGER2'';
 
                 INSERT INTO preishist (
                     preis, gueltigab, pnr
                 ) VALUES (
-                    old.preis, old.gueltigab, old.pnr
+                    OLD.preis, OLD.gueltigab, OLD.pnr
                 );
-            end if;
-        end if;
-        return new;
-    end;
-' language 'plpgsql';
+            END IF;
+        END IF;
+        RETURN NEW;
+    END;
+' LANGUAGE 'plpgsql';
 
 DROP TRIGGER IF EXISTS log_preis ON produkt;
 CREATE TRIGGER log_preis
-    before UPDATE ON produkt
-    for each row execute procedure log_preis();
+    BEFORE UPDATE ON produkt
+    FOR EACH ROW EXECUTE PROCEDURE log_preis();

@@ -26,7 +26,7 @@ CREATE TABLE produkt (
     FOREIGN KEY (hnr) REFERENCES hersteller (hnr)
 );
 
-CREATE SEQUENCE preishistNr start 1 increment 1;
+CREATE SEQUENCE preishistNr START 1 INCREMENT 1;
 
 CREATE TABLE preishist (
     nr numeric(6) DEFAULT nextval('preishistNr'),

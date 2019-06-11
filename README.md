@@ -2,7 +2,7 @@
 
 **Vorlesung: Datenbanksysteme (4. Semester)**
 
-Beinhaltet alle bearbeiteten Praktikumsunterlagen, bis jetzt nur zu Praktikum 1.
+Beinhaltet alle bearbeiteten Praktikumsunterlagen.
 
 ## ~~Team~~-Member:
 1. Tobias Hahnen (1218710)
@@ -10,7 +10,7 @@ Beinhaltet alle bearbeiteten Praktikumsunterlagen, bis jetzt nur zu Praktikum 1.
 
 ## Technik
 * PostgreSQL (psql)
-* SQL / Embedded SQL
+* (Embedded) SQL
 * C/C++
 
 ## Informationen der einzelnen Praktika
@@ -23,5 +23,5 @@ Beinhaltet alle bearbeiteten Praktikumsunterlagen, bis jetzt nur zu Praktikum 1.
 * Embedded SQL
 
 3. Praktikum
-* View/ Trigger
+* View + Trigger
 * PL/pgSQL

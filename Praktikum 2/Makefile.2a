@@ -9,6 +9,7 @@ CC = g++
 CFLAGS = -Wall -g -I`pg_config --includedir`
 LDFLAGS = -L`pg_config --libdir` -lstdc++
 
+
 # project files
 #--------------------------------
 PROGRAM = dbimp
@@ -20,7 +21,7 @@ OBJECTS = main.o db.o
 all: $(PROGRAM)
 
 $(PROGRAM): $(OBJECTS)
-	$(CC) -o $@ $+ $(LDFLAGS) -lpq 
+	$(CC) -o $@ $+ $(LDFLAGS) -lpq
 
 # generic rule for compiling *.cpp -> *.o
 %.o: %.cpp
@@ -28,4 +29,3 @@ $(PROGRAM): $(OBJECTS)
 
 clean:
 	rm -f $(PROGRAM) $(OBJECTS)
-
