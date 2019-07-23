@@ -1,9 +1,11 @@
 -- 1.4) Erstellen ...
 
+-- Tabellen entfernen falls vorhanden
 DROP TABLE IF EXISTS import;
 DROP TABLE IF EXISTS person;
 DROP TABLE IF EXISTS abteilung;
 
+-- Tabellen neu anlegen
 CREATE TABLE import (
     nr varchar(255),
     ort varchar(255),

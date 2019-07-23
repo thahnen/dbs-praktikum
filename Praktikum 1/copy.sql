@@ -1,10 +1,10 @@
 -- 1.4) Schreiben Sie ...
 
-/*
+-- Kodierung setzen und aus CSV importieren
 \encoding utf8
 \copy import from 'dbsnam-utf8.csv' delimiter ';'
-*/
 
+-- In Tabellen einfügen
 INSERT INTO abteilung (
     nr, name
 ) SELECT DISTINCT

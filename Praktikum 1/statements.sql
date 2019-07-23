@@ -1,5 +1,6 @@
 -- 1.4) Aus welchem ...
-SELECT ort, count(nr) FROM person GROUP BY ort;
+SELECT ort, count(nr)
+FROM person GROUP BY ort;
 
 -- 1.4) Wie heisst ...
 SELECT person.vorname, person.name, abteilung.name

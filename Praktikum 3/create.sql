@@ -13,16 +13,16 @@ DROP TABLE IF EXISTS hersteller;
     Create tables from scratch!
 */
 CREATE TABLE hersteller (
-    hnr varchar(4),
-    name varchar(30),
+    hnr varchar (4),
+    name varchar (30),
     PRIMARY KEY (hnr)
 );
 
 CREATE TABLE produkt (
-    pnr varchar(4),
-    name varchar(30),
-    hnr varchar(4),
-    preis numeric(8,2),
+    pnr varchar (4),
+    name varchar (30),
+    hnr varchar (4),
+    preis numeric (8,2),
     gueltigab date,
     PRIMARY KEY (pnr),
     FOREIGN KEY (hnr) REFERENCES hersteller (hnr)
@@ -31,10 +31,10 @@ CREATE TABLE produkt (
 CREATE SEQUENCE preishistNr START 1 INCREMENT 1;
 
 CREATE TABLE preishist (
-    nr numeric(6) DEFAULT nextval('preishistNr'),
-    preis numeric(8,2),
+    nr numeric (6) DEFAULT nextval('preishistNr'),
+    preis numeric (8,2),
     gueltigab date,
-    pnr varchar(4),
+    pnr varchar (4),
     PRIMARY KEY (nr),
     FOREIGN KEY (pnr) REFERENCES produkt (pnr)
 );
